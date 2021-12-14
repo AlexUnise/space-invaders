@@ -14,7 +14,7 @@ from PIL import Image,ImageTk
 #Initialisation de la fenetre de jeu
 wind = Tk()
 
-wind.geometry('1280x720')
+wind.geometry('1280x655')
 wind.title('Space Invaders')
 
 scoreLabel = Label(wind, text="Score: 0")
@@ -29,20 +29,23 @@ newGameButton = Button(wind, text="New game")
 img= Image.open("background.jpg")
 
 #Resize the Image using resize method
-resized_image= img.resize((300,205), Image.ANTIALIAS)
-new_image= ImageTk.PhotoImage(resized_image)
 
-canvas = Canvas(wind,bg="white")
+
+canvas = Canvas(wind,bg="white", width=int(2500/2.25), height=int(1406/2.25))
+resized_image= img.resize((int(2500/2.25),int(1406/2.25)), Image.ANTIALIAS)
+backgroundImage= ImageTk.PhotoImage(resized_image)
 canvas.create_image(0,0, image=backgroundImage, anchor = "nw")
-canvas.grid(column=0, row=1, sticky="NSWE")
+canvas.grid(column=0, row=1, sticky="w")
 
-wind.columnconfigure(0, weight=3)
+wind.columnconfigure(0, weight=1)
 wind.columnconfigure(1, weight=1)
+
+wind.rowconfigure(1, minsize=500)
 
 scoreLabel.grid(column=0, row=0, sticky="W")
 livesLabel.grid(column=0, row=0, sticky="E")
-newGameButton.grid(column=1, row=0)
-quitButton.grid(column=1, row=1)
+newGameButton.grid(column=1, row=0, sticky="s")
+quitButton.grid(column=1, row=1, sticky='n')
 
 wind.mainloop()
 
