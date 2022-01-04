@@ -16,11 +16,7 @@ wind = Tk()
 
 wind.geometry('1280x655')
 wind.title('Space Invaders')
-
-scoreLabel = Label(wind, text="Score: 0")
-livesLabel = Label(wind, text="Lives: 3")
-quitButton = Button(wind, text="Quit game", command=wind.destroy)
-newGameButton = Button(wind, text="New game")
+Jeu=SpaceInv.Space_Invaders(wind)
 
 
 #backgroundImage = PhotoImage(file="background.gif")
@@ -28,14 +24,21 @@ newGameButton = Button(wind, text="New game")
 #Load an image in the script
 img= Image.open("background.jpg")
 
+
 #Resize the Image using resize method
 
 
-canvas = Canvas(wind,bg="white", width=int(2500/2.25), height=int(1406/2.25))
-resized_image= img.resize((int(2500/2.25),int(1406/2.25)), Image.ANTIALIAS)
-backgroundImage= ImageTk.PhotoImage(resized_image)
-canvas.create_image(0,0, image=backgroundImage, anchor = "nw")
-canvas.grid(column=0, row=1, sticky="w")
+
+# resized_image= img.resize((Jeu.__width,Jeu.__height), Image.ANTIALIAS)
+# backgroundImage= ImageTk.PhotoImage(resized_image)
+# Jeu.__canvas.create_image(0,0, image=backgroundImage, anchor = "nw")
+# Jeu.__canvas.grid(column=0, row=1, sticky="w")
+
+scoreLabel = Label(wind, text="Score: 0")
+livesLabel = Label(wind, text="Lives: 3")
+quitButton = Button(wind, text="Quit game", command=wind.destroy)
+newGameButton = Button(wind, text="New game")
+
 
 wind.columnconfigure(0, weight=1)
 wind.columnconfigure(1, weight=1)
@@ -46,6 +49,9 @@ scoreLabel.grid(column=0, row=0, sticky="W")
 livesLabel.grid(column=0, row=0, sticky="E")
 newGameButton.grid(column=1, row=0, sticky="s")
 quitButton.grid(column=1, row=1, sticky='n')
+
+Jeu.place_aliens()
+Jeu.move_alien()
 
 wind.mainloop()
 
