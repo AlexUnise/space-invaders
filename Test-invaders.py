@@ -108,7 +108,7 @@ scoreLabel.grid(column=0, row=0, sticky="W")
 livesLabel.grid(column=0, row=0, sticky="E")
 newGameButton.grid(column=1, row=0, sticky="s")
 quitButton.grid(column=1, row=1, sticky='n')
-
+print(canvas.cget('height'))
 
 
 wind.mainloop()
