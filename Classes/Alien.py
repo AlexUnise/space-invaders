@@ -6,26 +6,26 @@ class Alien:
     #dx et dy réprésentent sa vitesse sur chaque axe
     def __init__(self,canvas,wind,positionx,positiony):
         self.__lives=1
-        self.__hitbox=50
-        self.width = 50
-        self.height = 50
+        self.__hitbox=25
+        self.width = 25
+        self.height = 25
         self.__positionx=positionx
         self.__positiony=positiony
-        self.__dx = 10
+        self.__dx = 5
         self.__dy = 30
         self.__canvas=canvas
         self.__wind=wind
-        self.__alien=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="red")
+        self.rect=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="red",)
     
 
     def move_alien(self,signe,DownMovement):
         
-        (x0,y0,x1,y1)=self.__canvas.coords(self.__alien)
-        self.__canvas.move(self.__alien,signe*self.__dx,DownMovement*self.__dy )
+        (x0,y0,x1,y1)=self.__canvas.coords(self.rect)
+        self.__canvas.move(self.rect,signe*self.__dx,DownMovement*self.__dy )
             
 
     def border_overlapping(self,signe,DownMovement):
-        (x0,y0,x1,y1)=self.__canvas.coords(self.__alien)
+        (x0,y0,x1,y1)=self.__canvas.coords(self.rect)
         if x1+(signe*self.__dx)>int(self.__canvas.cget('width')):
             signe=-1
             DownMovement=1
@@ -34,5 +34,5 @@ class Alien:
             DownMovement=1
         return signe,DownMovement
     
-    def alien_hit(self):
-        self.__alien
+
+    

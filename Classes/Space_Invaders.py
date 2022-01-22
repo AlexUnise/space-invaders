@@ -6,8 +6,9 @@ from Classes.Alien import Alien
 from Classes.Aliens_block import Aliens_block
 from Classes.Player import Player
 from Classes.Projectile import Projectile
+from Classes.Protection import Protection
 
-
+from random import randint
 
 
 
@@ -34,16 +35,19 @@ class Space_Invaders:
         self.__backImg=self.__canvas.create_image(0,0, image=backgroundImage, anchor = "nw")
         self.__canvas.grid(column=0, row=1, sticky="w")
         
+        #Protection
+        self.__protection=Protection(self.__canvas,self.__wind)
 
         #Aliens
-        # self.__alien=Alien(self.__canvas,self.__wind,0,0)
-        # self.__queue=[]
-        # self.__aliens=2
-        self.__blocAlien=Aliens_block(self.__canvas,self.__wind)
+        self.__blockAlien=Aliens_block(self.__canvas,self.__wind)
         
         #Joueur
         self.__player=Player(int(self.__width/2),self.__height-50,20,50,50,self.__canvas,self.__wind)
         
+        #Projectile
+        self.__fireRate=300
+        self.__wait=0
+
         #Lancer le jeu
         self.start()
     
@@ -67,19 +71,25 @@ class Space_Invaders:
         newGameButton.grid(column=1, row=0, sticky="s")
         quitButton.grid(column=1, row=1, sticky='n')
         
-        self.__blocAlien.create_bloc()
+        self.__protection.place_protection()
+        self.__blockAlien.create_bloc()
         self.__player.place_player()
-        self.__blocAlien.move_bloc()
+        self.__blockAlien.move_bloc()
         self.__canvas.focus_set()
         self.__canvas.bind('<Key>',self.keyboard)
-        
-        
+        self.projectile_wait()
+        self.alien_fire()
+
         wind.mainloop()
        
     
         
         
-   
+    def projectile_wait(self):
+        if self.__wait!=0:
+            self.__wait=0
+        self.__wind.after(self.__fireRate,self.projectile_wait)
+
         
 
     def keyboard(self,event):
@@ -90,9 +100,17 @@ class Space_Invaders:
 
         if key=='q' and x0-self.__player.dx>0:
             self.__player.moveLeft(self.__canvas)   
-        if key=='f':
-            projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.__backImg)
+        if key=='f' and self.__wait==0:
+            self.__wait=1
+            projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.__backImg,self.__blockAlien,"player",self.__player)
             projectilePlayer.place_projectile()
             projectilePlayer.fire_projectile()
             
-        
+    def alien_fire(self):
+        time=randint(800,1250)
+        row=randint(0,len(self.__blockAlien.aliens)-1)
+        column=randint(0,len(self.__blockAlien.aliens[row])-1)
+        projectileAlien=Projectile(self.__canvas,self.__wind,self.__blockAlien.aliens[row][column],self.__backImg,self.__blockAlien,"alien",self.__player)
+        projectileAlien.place_projectile()
+        projectileAlien.fire_projectile()
+        self.__wind.after(time,self.alien_fire)

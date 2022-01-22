@@ -16,6 +16,7 @@ class Player:
         self.height = height
         self.__canvas=canvas
         self.__wind=wind
+        self.__file=[]
         
         
     def place_player(self):
@@ -25,3 +26,10 @@ class Player:
         canvas.move(self.rect,-self.dx, 0)
     def moveRight(self,canvas):
         canvas.move(self.rect,self.dx, 0)
+
+
+    def player_hit(self):
+        self.__lives-=1
+        self.__canvas.itemconfig(self.rect, fill='yellow')
+        if self.__lives==0:
+            self.__canvas.delete(self.rect)
