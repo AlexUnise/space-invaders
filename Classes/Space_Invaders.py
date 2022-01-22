@@ -3,6 +3,7 @@ from PIL import Image,ImageTk
 import os
 
 from Classes.Alien import Alien
+from Classes.Aliens_block import Aliens_block
 from Classes.Player import Player
 from Classes.Projectile import Projectile
 
@@ -11,7 +12,7 @@ class Space_Invaders:
     def __init__(self):
         self.__width=int(2500/2.25)
         self.__height=int(1406/2.25)
-        
+
         #Fenêtre
         
         self.__wind=Tk()
@@ -30,13 +31,13 @@ class Space_Invaders:
         self.__canvas.grid(column=0, row=1, sticky="w")
         
 
-        #Aliens
-        self.__alien=Alien(self.__canvas,self.__wind)
-        self.__queue=[]
-        self.__aliens=2
+        # #Aliens
+        # self.__alien=Alien(self.__canvas,self.__wind)
+        # self.__queue=[]
+        # self.__aliens=2
         
         
-        #Joueuer
+        #Joueur
         self.__player=Player(int(self.__width/2),self.__height-50,20,50,50,self.__canvas,self.__wind)
         
         #Lancer le jeu
@@ -62,9 +63,13 @@ class Space_Invaders:
         newGameButton.grid(column=1, row=0, sticky="s")
         quitButton.grid(column=1, row=1, sticky='n')
         
-        self.__alien.place_aliens()
+        aliens = Aliens_block(self.__canvas,self.__wind).create_block(3)
+        for alien in aliens:
+            alien.place_aliens()
+            alien.move_alien()
+        
         self.__player.place_player()
-        self.__alien.move_alien()
+
         self.__canvas.focus_set()
         self.__canvas.bind('<Key>',self.keyboard)
         
