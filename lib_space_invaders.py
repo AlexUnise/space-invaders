@@ -105,7 +105,7 @@ class Alien:
         self.height = 50
         self.__positionx=positionx
         self.__positiony=positiony
-        self.__dx = 10
+        self.__dx = 5
         self.__dy = 30
         self.__canvas=canvas
         self.__wind=wind
@@ -210,6 +210,7 @@ class Bloc:
         self.__positiony=0
         self.__signeDx=1
         self.__DownMovement=0
+        
     def create_bloc(self):
         placementy=self.__positiony
         for columns in range(0,self.__height):
@@ -222,6 +223,7 @@ class Bloc:
                 placementx+=60
             self.__aliens.append(ligne_alien)
             placementy+=60
+            
     def move_bloc(self):
         self.__DownMovement=0
         for ligne in self.__aliens:
@@ -234,4 +236,4 @@ class Bloc:
         for ligne in self.__aliens:
             for alien in ligne:
                 alien.move_alien(self.__signeDx,self.__DownMovement)
-        self.__wind.after(120,self.move_bloc)
+        self.__wind.after(50,self.move_bloc)
