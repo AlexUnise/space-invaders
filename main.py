@@ -6,17 +6,19 @@ Groupe: C
 Description du fichier: Programme principale.
 
 """
+import os 
 
-import lib_space_invaders as SpaceInv
 from tkinter import Tk, Label, Button, Canvas, PhotoImage
 from PIL import Image,ImageTk
+
+from Classes.Space_Invaders import Space_Invaders
 
 #Initialisation de la fenetre de jeu
 # wind = Tk()
 
 # wind.geometry('1280x655')
 # wind.title('Space Invaders')
-Jeu=SpaceInv.Space_Invaders()
+Jeu= Space_Invaders()
 # Jeu.start(Jeu.Get_wind)
 
 #backgroundImage = PhotoImage(file="background.gif")
