@@ -24,7 +24,8 @@ class Space_Invaders:
         self.__wind.geometry('1280x655')
         self.__wind.title('Space Invaders')
        
-        #Canvas
+        #Check for new game
+        self.__restart=False
         
 
         #Lancer le jeu
@@ -32,6 +33,8 @@ class Space_Invaders:
         
 
     def  start_game(self):
+        #Nouvelle partie
+        self.__restart=True
 
         self.__canvas=Canvas(self.__wind,bg="black", width=self.__width, height=self.__height)
 
@@ -45,7 +48,7 @@ class Space_Invaders:
 
         self.__canvas.grid(column=0, row=1, sticky="w")
 
-
+        
         
         #Joueur
         self.__player = Player(int(self.__width/2),self.__height-50,20,50,50,self.__canvas,self.__wind)
@@ -81,8 +84,11 @@ class Space_Invaders:
         self.__canvas.bind('<Key>',self.keyboard)
 
         self.projectile_wait()
+
         self.alien_fire()
 
+
+        self.__restart=False
 
 
         
@@ -118,11 +124,13 @@ class Space_Invaders:
        
     
         
-        
+     #Fonction qui impose une pause entre chaque tir du joueur   
     def projectile_wait(self):
         if self.__wait!=0:
             self.__wait=0
-        self.__wind.after(self.__fireRate,self.projectile_wait)
+        projectileWaitAfter=self.__wind.after(self.__fireRate,self.projectile_wait)
+        #if self.__restart==True:
+            #self.__wind.after_cancel(projectileWaitAfter)
 
         
     
@@ -142,13 +150,16 @@ class Space_Invaders:
             projectilePlayer.fire_projectile()
             
     def alien_fire(self):
+        
         time=randint(800,1250)
         row=randint(0,len(self.__blockAlien.aliens)-1)
         column=randint(0,len(self.__blockAlien.aliens[row])-1)
         projectileAlien=Projectile(self.__canvas,self.__wind,self.__blockAlien.aliens[row][column],self.canvas_img_rect,self.__blockAlien,"alien",self.__player)
         projectileAlien.place_projectile()
         projectileAlien.fire_projectile()
-        self.__wind.after(time,self.alien_fire)
+        alienFireAfter=self.__wind.after(time,self.alien_fire)
+        #if self.__restart==True:
+            #self.__wind.after_cancel(alienFireAfter)
 
     def special_spawn(self):
         
@@ -157,4 +168,6 @@ class Space_Invaders:
             self.__spawn=False
         elif self.__specialAlien.rect not in self.__canvas.find_all():
             self.__spawn=True
-        self.__wind.after(self.__specialSpawnTime,self.special_spawn)
+        specialSpawnAfter=self.__wind.after(self.__specialSpawnTime,self.special_spawn)
+        #if self.__restart==True:
+            #self.__wind.after_cancel(specialSpawnAfter)
