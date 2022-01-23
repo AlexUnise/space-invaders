@@ -11,7 +11,7 @@ Commandes du jeu:
 
 Règles du jeu:
 - Vous perdez dès que vous perdez vos 3 vies
-- Vous perdez si vous ennemis atteignent vos murs de protections
+- Vous perdez si les ennemis atteignent vos murs de protections
 - Vous gagnez si vous tuez tous vos ennemies
 
 Comment lancer le jeu ?:
