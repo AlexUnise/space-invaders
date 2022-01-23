@@ -12,7 +12,7 @@ from Classes.Protection import Protection
 from random import randint
 
 
-
+#Classe principale contenant le jeu 
 class Space_Invaders:
     def __init__(self):
         self.__width=int(2500/2.25)
@@ -30,8 +30,9 @@ class Space_Invaders:
 
         #Lancer le jeu
         self.start_window()
-        
 
+
+    #Fonction permettant de lancer, ainsi que de relancer la partie
     def  start_game(self):
         #Nouvelle partie
         self.__restart=True
@@ -100,7 +101,7 @@ class Space_Invaders:
        
 
 
-
+    #Methode qui cree et organise la fenetre 
     def start_window(self):
         wind=self.__wind
     
@@ -132,7 +133,7 @@ class Space_Invaders:
        
     
         
-     #Fonction qui impose une pause entre chaque tir du joueur   
+     #Methode qui impose une pause entre chaque tir du joueur   
     def projectile_wait(self):
         if self.__wait!=0:
             self.__wait=0
@@ -142,7 +143,7 @@ class Space_Invaders:
 
         
     
-
+    #Methode qui recoit en entree les touches appuyees par l'utilisateur et qui effectue l'action correspondante a cette touche
     def keyboard(self,event):
         (x0,y0)=self.__canvas.coords(self.__player.rect)
         key=event.keysym
@@ -156,7 +157,8 @@ class Space_Invaders:
             projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.canvas_img_rect,self.__blockAlien,"player",self.__player)
             projectilePlayer.place_projectile()
             projectilePlayer.fire_projectile()
-            
+
+    #Methode qui determine aleatoirement quand et quel alien va tirer          
     def alien_fire(self):
         
         time=randint(800,1250)
@@ -169,6 +171,7 @@ class Space_Invaders:
         #if self.__restart==True:
             #self.__wind.after_cancel(alienFireAfter)
 
+    #Methode qui fait apparaitre l'ennemi special
     def special_spawn(self):
         
         if self.__spawn==True:

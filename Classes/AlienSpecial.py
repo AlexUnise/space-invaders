@@ -5,6 +5,7 @@ from Classes.Projectile import Projectile
 
 from random import randint
 
+#Classe contenant les informations et les methodes pour l'ennemi special
 class AlienSpecial:
     def __init__(self,canvas,wind,positionx,positiony):
         self.width = 50
@@ -18,7 +19,7 @@ class AlienSpecial:
         self.rect=0
 
     
-
+    #Methode qui place l'ennemi special sur le canvas
     def place_special(self):
         scriptDir = os.path.dirname(__file__)
         imgpath = os.path.join(scriptDir, '../Assets/space_invaders_alien.png')
@@ -27,8 +28,9 @@ class AlienSpecial:
         self.rect=self.__canvas.create_image(self.__positionx+self.width,self.__positiony+self.height, image=self.__canvas_img) 
         
         self.special_move()
-        #self.special_fire()
 
+
+    #Methode qui permet au ennemi special de bouger
     def special_move(self):
         (x0,y0)=self.__canvas.coords(self.rect)
         if x0+self.width+(self.__dx)>int(self.__canvas.cget('width')):
@@ -39,11 +41,3 @@ class AlienSpecial:
             self.__canvas.move(self.rect,self.__dx,self.__dy )
             self.__wind.after(10,self.special_move)
 
-
-    def special_fire(self):
-        time=randint(800,1250)
-        projectileAlienSpecial=Projectile(self.__canvas,self.__wind,self.rect,self.canvas_img_rect,self.__blockAlien,"alien",self.__player)
-        projectileAlienSpecial.place_projectile()
-        projectileAlienSpecial.fire_projectile()
-        if self.__specialAlien.rect in self.__canvas.find_all():
-            self.__wind.after(time,self.special_fire)

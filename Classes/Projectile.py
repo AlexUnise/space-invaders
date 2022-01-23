@@ -1,4 +1,4 @@
-
+#Classe qui gere les projectiles des ennemis et du joueur
 class Projectile:
     def __init__(self,canvas,wind,entity,backImg,blockAlien,shooter,player):
         self.__height=10
@@ -11,7 +11,7 @@ class Projectile:
         self.__blockAlien=blockAlien
         self.__player=player
         self.__origin=shooter
-
+    #Methode qui permet de placer un projectiler devant l'alien ou le joueur
     def place_projectile(self):
         (x0,y0)=self.__canvas.coords(self.__entity.rect)
         if self.__origin=="player":
@@ -22,7 +22,7 @@ class Projectile:
             signe=1
         self.projectile=self.__canvas.create_rectangle(x0,y0+signe*(self.__entity.height+2),x0+self.__width,y0+signe*(self.__entity.height+2+self.__height),fill=color)
         
-    
+    #Methode qui fait bouger verticalement le projectile, et qui gere les collisions entre le projectile et les differents objets du canvas
     def fire_projectile(self):
         (x_proj0,y_proj0,x_proj1,y_proj1)=self.__canvas.coords(self.projectile)
         liste_objet=self.__canvas.find_overlapping(x_proj0,y_proj0,x_proj1,y_proj1)
