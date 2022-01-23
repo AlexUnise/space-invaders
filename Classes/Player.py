@@ -10,8 +10,8 @@ class Player:
     
     def __init__(self,x,y,dx,width,height,canvas,wind):
         self.__name=""
-        self.__lives=3
-        self.__score=0
+        self.__lives = 3
+        self.score = 0
         self.__positionx = x
         self.__positiony = y
         self.dx = dx

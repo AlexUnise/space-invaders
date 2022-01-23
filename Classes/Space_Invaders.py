@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button, Canvas
+from tkinter import Tk, Label, Button, Canvas, StringVar
 from PIL import Image,ImageTk
 import os
 
@@ -57,7 +57,7 @@ class Space_Invaders:
         self.__protection=Protection(self.__canvas,self.__wind)
 
         #Aliens
-        self.__blockAlien=Aliens_block(self.__canvas,self.__wind)
+        self.__blockAlien=Aliens_block(self.__canvas,self.__wind,self.__player,self.score)
 
         #Special Alien
         self.__specialAlien=AlienSpecial(self.__canvas,self.__wind,0,0)
@@ -72,6 +72,7 @@ class Space_Invaders:
 
         self.__blockAlien.create_bloc()
         self.__blockAlien.move_bloc()
+        
 
         self.special_spawn()
  
@@ -101,9 +102,13 @@ class Space_Invaders:
 
 
     def start_window(self):
-        number_game = 0
         wind=self.__wind
-        scoreLabel = Label(wind, text="Score: 0")
+    
+        self.score = StringVar()
+        self.score.set('Score: 0')
+
+
+        scoreLabel = Label(wind, textvariable=self.score)
         livesLabel = Label(wind, text="Lives: 3")
         quitButton = Button(wind, text="Quit game", command=wind.destroy)
         newGameButton = Button(wind, text="New game", command=self.start_game)

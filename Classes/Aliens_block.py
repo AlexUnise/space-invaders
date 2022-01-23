@@ -5,7 +5,7 @@ def objectToID(object):
 
 
 class Aliens_block:
-    def __init__(self,canvas,wind):
+    def __init__(self,canvas,wind,player,score_counter):
         self.__canvas=canvas
         self.__wind=wind
         self.__height=3
@@ -16,6 +16,8 @@ class Aliens_block:
         self.__signeDx=1
         self.__DownMovement=0
         self.__aliensHit=[]
+        self.__player = player
+        self.__score_counter = score_counter
 
     def create_bloc(self):
         placementy=self.__positiony
@@ -60,6 +62,8 @@ class Aliens_block:
                         ligne.pop(ligne.index(alien))
                         self.__aliensHit.pop(self.__aliensHit.index(id))
                         self.__canvas.delete(alien.rect)
+                        self.__player.score += 1
+                        self.__score_counter.set('Score: ' + str(self.__player.score))
                         if ligne==[]:
                             self.aliens.pop(self.aliens.index(ligne))
         
