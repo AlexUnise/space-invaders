@@ -44,17 +44,27 @@ class Player:
         self.__life_counter.set('Lives: ' + str(self.lives) )
 
         if self.lives==0:
-            #On efface tout dans le canvas
-            self.__canvas.delete('all')
-            #Affichage du titre gameover 
-            self.__canvas.create_text(int(int(self.__canvas.cget('width'))/2),int(int(self.__canvas.cget('height'))/2), text='Vous avez perdu !', fill="#fff", font=('Helvetica','30','bold'))
-            #On désactive l'écoute des évenements clavier 
-            self.__canvas.unbind('<Key>', self.__keyboard_event_id)
-            # #On désactive l'exécution de la fonction alien_fire 
-            # self.__canvas.after_cancel(self.__alienFireAfter)
+            self.game_over(1)
     
     def set_keyboard_id(self,id):
         self.__keyboard_event_id = id
+
+
+    def game_over(self,resultat):
+
+        if resultat==1:
+            texte="Vous avez perdu ! Score: "+str(self.score)
+        else:
+            texte="L'humanité survit! Score: "+str(self.score)
+        #On efface tout dans le canvas
+        self.__canvas.delete('all')
+        #Affichage du titre gameover 
+        self.__canvas.create_text(int(int(self.__canvas.cget('width'))/2),int(int(self.__canvas.cget('height'))/2), text=texte, fill="#fff", font=('Helvetica','30','bold'))
+        #On désactive l'écoute des évenements clavier 
+        self.__canvas.unbind('<Key>', self.__keyboard_event_id)
+        # #On désactive l'exécution de la fonction alien_fire 
+        # self.__canvas.after_cancel(self.__alienFireAfter)
+
 
     # def set_alienFireAfter(self, id):
     #     self.__alienFireAfter = id

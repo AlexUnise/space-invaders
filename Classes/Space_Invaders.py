@@ -26,6 +26,7 @@ class Space_Invaders:
        
         #Check for new game
         self.__restart=False
+        self.__afterFunctions=[]
         
 
         #Lancer le jeu
@@ -35,7 +36,9 @@ class Space_Invaders:
     #Fonction permettant de lancer, ainsi que de relancer la partie
     def  start_game(self):
         #Nouvelle partie
-        self.__restart=True
+        if self.__afterFunctions!=[]:
+            for afterFunction in self.__afterFunctions:
+                self.__wind.after_cancel(afterFunction)
 
         self.__canvas=Canvas(self.__wind,bg="black", width=self.__width, height=self.__height)
 
@@ -142,8 +145,7 @@ class Space_Invaders:
         if self.__wait!=0:
             self.__wait=0
         projectileWaitAfter=self.__wind.after(self.__fireRate,self.projectile_wait)
-        #if self.__restart==True:
-            #self.__wind.after_cancel(projectileWaitAfter)
+        self.__afterFunctions.append(projectileWaitAfter)
 
         
     
@@ -158,22 +160,21 @@ class Space_Invaders:
             self.__player.moveLeft(self.__canvas)   
         if key=='f' and self.__wait==0:
             self.__wait=1
-            projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.canvas_img_rect,self.__blockAlien,"player",self.__player)
+            projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.canvas_img_rect,self.__blockAlien,"player",self.__player,self.__specialAlien)
             projectilePlayer.place_projectile()
             projectilePlayer.fire_projectile()
 
     #Methode qui determine aleatoirement quand et quel alien va tirer          
     def alien_fire(self):
         
-        time=randint(800,1250)
+        time=randint(600,1000)
         row=randint(0,len(self.__blockAlien.aliens)-1)
         column=randint(0,len(self.__blockAlien.aliens[row])-1)
-        projectileAlien=Projectile(self.__canvas,self.__wind,self.__blockAlien.aliens[row][column],self.canvas_img_rect,self.__blockAlien,"alien",self.__player)
+        projectileAlien=Projectile(self.__canvas,self.__wind,self.__blockAlien.aliens[row][column],self.canvas_img_rect,self.__blockAlien,"alien",self.__player,self.__specialAlien)
         projectileAlien.place_projectile()
         projectileAlien.fire_projectile()
-        self.__alienFireAfter=self.__wind.after(time,self.alien_fire)
-        #if self.__restart==True:
-            #self.__wind.after_cancel(alienFireAfter)
+        alienFireAfter=self.__wind.after(time,self.alien_fire)
+        self.__afterFunctions.append(alienFireAfter)
 
     #Methode qui fait apparaitre l'ennemi special
     def special_spawn(self):
@@ -184,5 +185,4 @@ class Space_Invaders:
         elif self.__specialAlien.rect not in self.__canvas.find_all():
             self.__spawn=True
         specialSpawnAfter=self.__wind.after(self.__specialSpawnTime,self.special_spawn)
-        #if self.__restart==True:
-            #self.__wind.after_cancel(specialSpawnAfter)
+        self.__afterFunctions.append(specialSpawnAfter)

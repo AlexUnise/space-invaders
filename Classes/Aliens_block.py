@@ -9,7 +9,7 @@ class Aliens_block:
         self.__canvas=canvas
         self.__wind=wind
         self.__height=3
-        self.__width=8
+        self.__width=12
         self.aliens=[]
         self.__positionx=0
         self.__positiony=0
@@ -17,7 +17,7 @@ class Aliens_block:
         self.__DownMovement=0
         self.__aliensHit=[]
         self.__player = player
-        self.__score_counter = score_counter
+        self.score_counter = score_counter
 
 
     #Methode qui permet de creer et de placer multiples alien en formation rectangulaire sur le canvas
@@ -77,9 +77,14 @@ class Aliens_block:
                         self.__aliensHit.pop(self.__aliensHit.index(id))
                         self.__canvas.delete(alien.rect)
                         self.__player.score += 1
-                        self.__score_counter.set('Score: ' + str(self.__player.score))
+                        self.score_counter.set('Score: ' + str(self.__player.score))
                         if ligne==[]:
                             self.aliens.pop(self.aliens.index(ligne))
-        
+        if self.aliens==[]:
+            self.__player.score+=20
+            self.score_counter.set('Score: ' + str(self.__player.score))
+            self.__player.game_over(0)
+    
+
 
         

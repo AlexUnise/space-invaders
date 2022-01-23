@@ -30,7 +30,7 @@ class Alien:
     def move_alien(self,signe,DownMovement):
         self.__canvas.move(self.rect,signe*self.__dx,DownMovement*self.__dy )
             
-    #Methode qui verifie si l'alien touche les bord du canvas.
+    #Methode qui verifie si l'alien touche les bord du canvas et qui renvoie le mouvement a effectuer.
     def border_overlapping(self,signe,DownMovement):
 
         (x0,y0)=self.__canvas.coords(self.rect)

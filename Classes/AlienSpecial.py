@@ -8,6 +8,7 @@ from random import randint
 #Classe contenant les informations et les methodes pour l'ennemi special
 class AlienSpecial:
     def __init__(self,canvas,wind,positionx,positiony):
+        self.bonusScore=10
         self.width = 50
         self.height = 50
         self.__positionx=positionx
@@ -32,12 +33,13 @@ class AlienSpecial:
 
     #Methode qui permet au ennemi special de bouger
     def special_move(self):
-        (x0,y0)=self.__canvas.coords(self.rect)
-        if x0+self.width+(self.__dx)>int(self.__canvas.cget('width')):
-            self.__dx=-self.__dx
-        elif x0-self.width+(self.__dx)<0:
-            self.__dx=-self.__dx
-        if self.rect in self.__canvas.find_all():
+         if self.rect in self.__canvas.find_all():
+            (x0,y0)=self.__canvas.coords(self.rect)
+            if x0+self.width+(self.__dx)>int(self.__canvas.cget('width')):
+                self.__dx=-self.__dx
+            elif x0-self.width+(self.__dx)<0:
+                self.__dx=-self.__dx
+        
             self.__canvas.move(self.rect,self.__dx,self.__dy )
             self.__wind.after(10,self.special_move)
 
