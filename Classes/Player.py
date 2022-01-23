@@ -28,7 +28,7 @@ class Player:
         img= Image.open(imgpath)
         self.__canvas_img = ImageTk.PhotoImage(img)
         self.rect=self.__canvas.create_image(self.__positionx,self.__positiony, image=self.__canvas_img)  
-        #self.rect=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="green")
+
     
     def moveLeft(self,canvas):
         canvas.move(self.rect,-self.dx, 0)

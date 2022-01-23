@@ -18,30 +18,27 @@ class Alien:
         self.__wind=wind
 
 
-
         scriptDir = os.path.dirname(__file__)
         imgpath = os.path.join(scriptDir, '../Assets/space_invaders_alien.png')
         img= Image.open(imgpath)
         self.__canvas_img = ImageTk.PhotoImage(img)
-        self.rect=self.__canvas.create_image(self.__positionx,self.__positiony, image=self.__canvas_img)  
-        #self.rect=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="red",)
+        self.rect=self.__canvas.create_image(self.__positionx+self.width,self.__positiony+self.height, image=self.__canvas_img)  
+
     
 
     def move_alien(self,signe,DownMovement):
         
-        #(x0,y0,x1,y1)=self.__canvas.coords(self.rect)
         (x0,y0)=self.__canvas.coords(self.rect)
         self.__canvas.move(self.rect,signe*self.__dx,DownMovement*self.__dy )
             
 
     def border_overlapping(self,signe,DownMovement):
 
-        #(x0,y0,x1,y1)=self.__canvas.coords(self.rect)
         (x0,y0)=self.__canvas.coords(self.rect)
         if x0+self.width+(signe*self.__dx)>int(self.__canvas.cget('width')):
             signe=-1
             DownMovement=1
-        elif x0+(signe*self.__dx)<0:
+        elif x0-self.width+(signe*self.__dx)<0:
             signe=1
             DownMovement=1
         return signe,DownMovement

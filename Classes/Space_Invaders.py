@@ -1,8 +1,9 @@
-from tkinter import Tk, Label, Button, Canvas, PhotoImage
+from tkinter import Tk, Label, Button, Canvas
 from PIL import Image,ImageTk
 import os
 
 from Classes.Alien import Alien
+from Classes.AlienSpecial import AlienSpecial
 from Classes.Aliens_block import Aliens_block
 from Classes.Player import Player
 from Classes.Projectile import Projectile
@@ -55,16 +56,30 @@ class Space_Invaders:
         #Aliens
         self.__blockAlien=Aliens_block(self.__canvas,self.__wind)
 
+        #Special Alien
+        self.__specialAlien=AlienSpecial(self.__canvas,self.__wind,0,0)
+        self.__specialSpawnTime=20000
+        self.__spawn=False
+
         #Projectile
         self.__fireRate=600
         self.__wait=0
 
         self.__protection.place_protection()
+
         self.__blockAlien.create_bloc()
-        self.__player.place_player()
         self.__blockAlien.move_bloc()
+
+        self.special_spawn()
+ 
+
+        self.__player.place_player()
+
+        
+
         self.__canvas.focus_set()
         self.__canvas.bind('<Key>',self.keyboard)
+
         self.projectile_wait()
         self.alien_fire()
 
@@ -134,3 +149,12 @@ class Space_Invaders:
         projectileAlien.place_projectile()
         projectileAlien.fire_projectile()
         self.__wind.after(time,self.alien_fire)
+
+    def special_spawn(self):
+        
+        if self.__spawn==True:
+            self.__specialAlien.place_special()
+            self.__spawn=False
+        elif self.__specialAlien.rect not in self.__canvas.find_all():
+            self.__spawn=True
+        self.__wind.after(self.__specialSpawnTime,self.special_spawn)

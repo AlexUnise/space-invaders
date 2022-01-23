@@ -2,8 +2,8 @@ class Protection:
     def __init__(self,canvas,wind):
         self.__canvas=canvas
         self.__wind=wind
-        self.__width=10
-        self.__height=5
+        self.__width=9
+        self.__height=4
         self.__numberOfProtections=3
         self.__protectionDistancex=150
         self.__protectionDistancey=250

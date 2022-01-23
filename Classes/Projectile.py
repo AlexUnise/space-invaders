@@ -16,9 +16,11 @@ class Projectile:
         (x0,y0)=self.__canvas.coords(self.__entity.rect)
         if self.__origin=="player":
             color="yellow"
+            signe=-1
         elif self.__origin=="alien":
             color="red"
-        self.projectile=self.__canvas.create_rectangle(x0+int(self.__entity.width/2),y0-5,x0+int(self.__entity.width/2)+self.__width,y0-5-self.__height,fill=color)
+            signe=1
+        self.projectile=self.__canvas.create_rectangle(x0,y0+signe*(self.__entity.height+2),x0+self.__width,y0+signe*(self.__entity.height+2+self.__height),fill=color)
         
     
     def fire_projectile(self):
