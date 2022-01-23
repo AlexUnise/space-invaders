@@ -1,5 +1,9 @@
 from Classes.Alien import Alien
 
+def objectToID(object):
+    return object.alien
+
+
 class Aliens_block:
     def __init__(self,canvas,wind):
         self.__canvas=canvas
@@ -37,5 +41,9 @@ class Aliens_block:
         for ligne in self.__aliens:
             for alien in ligne:
                 alien.move_alien(self.__signeDx,self.__DownMovement)
-        self.__wind.after(20,self.move_bloc)
+        self.__id_after = self.__wind.after(20,self.move_bloc)
+
+    def stop_after(self):
+        self.__wind.after_cancel(self.__id_after)
+    
     

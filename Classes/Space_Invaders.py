@@ -23,7 +23,15 @@ class Space_Invaders:
         self.__wind.title('Space Invaders')
        
         #Canvas
-        self.__canvas=Canvas(self.__wind,bg="white", width=self.__width, height=self.__height)
+        
+
+        #Lancer le jeu
+        self.start_window()
+        
+
+    def  start_game(self):
+
+        self.__canvas=Canvas(self.__wind,bg="black", width=self.__width, height=self.__height)
 
         scriptDir = os.path.dirname(__file__)
         imgpath = os.path.join(scriptDir, '../Assets/background.jpg')
@@ -35,12 +43,6 @@ class Space_Invaders:
 
         self.__canvas.grid(column=0, row=1, sticky="w")
 
-        #Lancer le jeu
-        self.start_window()
-        
-
-    def  start_game(self):
-        self.__canvas.delete('all')
         self.canvas_img_rect =self.__canvas.create_image(0,0, image=self.__canvas_img, anchor = "nw")
         
         #Aliens
@@ -53,12 +55,16 @@ class Space_Invaders:
         self.__player = Player(int(self.__width/2),self.__height-50,20,50,50,self.__canvas,self.__wind)
 
         self.__blocAlien.create_bloc()
+        
+        
+        print(self.__canvas.find_all())
         self.__player.place_player()
         self.__blocAlien.move_bloc()
         self.__canvas.focus_set()
         self.__canvas.bind('<Key>', self.keyboard)
 
     def start_window(self):
+        number_game = 0
         wind=self.__wind
         scoreLabel = Label(wind, text="Score: 0")
         livesLabel = Label(wind, text="Lives: 3")

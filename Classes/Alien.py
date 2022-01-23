@@ -19,12 +19,14 @@ class Alien:
     
 
     def move_alien(self,signe,DownMovement):
+
         (x0,y0,x1,y1)=self.__canvas.coords(self.__alien)
         self.__canvas.move(self.__alien,signe*self.__dx,DownMovement*self.__dy)
 
             
 
     def border_overlapping(self,signe,DownMovement):
+        #print("L'Alien " + str(self.__alien) + " touche le bord")
         (x0,y0,x1,y1)=self.__canvas.coords(self.__alien)
 
         if x1+(signe*self.__dx)>int(self.__canvas.cget('width')):
