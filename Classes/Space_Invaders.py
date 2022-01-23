@@ -25,7 +25,6 @@ class Space_Invaders:
         self.__wind.title('Space Invaders')
        
         #Check for new game
-        self.__restart=False
         self.__afterFunctions=[]
         
 
@@ -73,36 +72,32 @@ class Space_Invaders:
         self.__specialSpawnTime=20000
         self.__spawn=False
 
-        #Projectile
+        #Vitesse de tir du projectile du joueuer
         self.__fireRate=600
         self.__wait=0
-
+        #On place les protections
         self.__protection.place_protection()
-
+        #On place les ennemis
         self.__blockAlien.create_bloc()
+        #on fait bouger les ennemis
         self.__blockAlien.move_bloc()
-        
-
+        #On fait apparaitre un ennemi special
         self.special_spawn()
- 
-
+        #On place le joueur
         self.__player.place_player()
 
         
-
+        #On detecte les touches appuyees
         self.__canvas.focus_set()
         self.__keyboard_event_id = self.__canvas.bind('<Key>',self.keyboard)
-
         self.__player.set_keyboard_id(self.__keyboard_event_id)
-
+        #On lance un compteur pour limiter le nombre de tir du joueur
         self.projectile_wait()
 
-
+        #Les aliens commencent a tirer aleatoirement
         self.alien_fire()
 
-        #self.__player.set_alienFireAfter(self.__alienFireAfter)
 
-        self.__restart=False
 
 
         
@@ -132,7 +127,6 @@ class Space_Invaders:
 
         wind.columnconfigure(0, weight=1)
         wind.columnconfigure(1, weight=1)
-
         wind.rowconfigure(1, minsize=500)
 
         scoreLabel.grid(column=0, row=0, sticky="W")

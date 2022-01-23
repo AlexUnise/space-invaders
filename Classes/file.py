@@ -1,4 +1,4 @@
-class file:
+class File:
     def __init__(self):
         self.__file=[]
     def ajouter(self,element):
@@ -13,3 +13,5 @@ class file:
         if len(self.__pile)!=[]:
             element=self.__file.pop(-1)
             return element,self.__file
+        else:
+            return None,None

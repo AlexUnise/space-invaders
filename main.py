@@ -7,10 +7,8 @@ Description du fichier: Programme principale.
 
 """
 import os 
-
 from tkinter import Tk, Label, Button, Canvas, PhotoImage
 from PIL import Image,ImageTk
-
 from Classes.Space_Invaders import Space_Invaders
 
 

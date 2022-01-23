@@ -1,3 +1,4 @@
+from Classes.Pile import Pile
 #Classe qui gere les structures de protection devqnt le joueur
 class Protection:
     def __init__(self,canvas,wind):
@@ -9,14 +10,14 @@ class Protection:
         self.__protectionDistancex=150
         self.__protectionDistancey=250
         self.__cubeSize=20
-        self.__listProtections=[]
+        self.__listProtections=Pile()
         self.__positionx=int(int(self.__canvas.cget('width'))-((self.__numberOfProtections*self.__width*self.__cubeSize)+((self.__numberOfProtections-1)*self.__protectionDistancex)))/2
         self.__positiony=int(self.__canvas.cget('height'))-self.__protectionDistancey
     
     #Methode qui permet de placer des blocs protections constitues de petits carree 
     def place_protection(self):
         placementProtection=0
-        for columns in range(0,self.__numberOfProtections):
+        for number in range(0,self.__numberOfProtections):
 
             blocProtection=[]
             placementy=0
@@ -34,6 +35,6 @@ class Protection:
                 blocProtection.append(ligneProtection)
                 placementy+=self.__cubeSize+1
 
-            self.__listProtections.append(blocProtection)
+            self.__listProtections.empiler(blocProtection)
             placementProtection+=self.__protectionDistancex+(self.__width*self.__cubeSize)
         
