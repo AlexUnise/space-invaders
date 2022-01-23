@@ -9,7 +9,7 @@ class Aliens_block:
         self.__canvas=canvas
         self.__wind=wind
         self.__height=3
-        self.__width=12
+        self.__width=10
         self.aliens=[]
         self.__positionx=0
         self.__positiony=0
@@ -49,10 +49,13 @@ class Aliens_block:
 
         for ligne in self.aliens:
             if self.__signeDx==1:
-                [self.__signeDx,self.__DownMovement]=ligne[-1].border_overlapping(self.__signeDx,self.__DownMovement)
+                [self.__signeDx,self.__DownMovement,alienInvasion]=ligne[-1].border_overlapping(self.__signeDx,self.__DownMovement)
                 
             elif self.__signeDx==-1:
-                [self.__signeDx,self.__DownMovement]=ligne[0].border_overlapping(self.__signeDx,self.__DownMovement)
+                [self.__signeDx,self.__DownMovement,alienInvasion]=ligne[0].border_overlapping(self.__signeDx,self.__DownMovement)
+
+            if alienInvasion==True:
+                self.__player.game_over(1)
 
         for ligne in self.aliens:
             for alien in ligne:
@@ -76,12 +79,12 @@ class Aliens_block:
                         ligne.pop(ligne.index(alien))
                         self.__aliensHit.pop(self.__aliensHit.index(id))
                         self.__canvas.delete(alien.rect)
-                        self.__player.score += 1
+                        self.__player.score += 10
                         self.score_counter.set('Score: ' + str(self.__player.score))
                         if ligne==[]:
                             self.aliens.pop(self.aliens.index(ligne))
         if self.aliens==[]:
-            self.__player.score+=20
+            self.__player.score+=50
             self.score_counter.set('Score: ' + str(self.__player.score))
             self.__player.game_over(0)
     

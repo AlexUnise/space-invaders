@@ -30,9 +30,10 @@ class Alien:
     def move_alien(self,signe,DownMovement):
         self.__canvas.move(self.rect,signe*self.__dx,DownMovement*self.__dy )
             
-    #Methode qui verifie si l'alien touche les bord du canvas et qui renvoie le mouvement a effectuer.
+    #Methode qui verifie si l'alien touche les bord du canvas et qui renvoie le mouvement a effectuer, 
+    # et verifie si l'alien a atteint les protections du joueur
     def border_overlapping(self,signe,DownMovement):
-
+        alienInvasion=False
         (x0,y0)=self.__canvas.coords(self.rect)
         if x0+self.width+(signe*self.__dx)>int(self.__canvas.cget('width')):
             signe=-1
@@ -40,7 +41,9 @@ class Alien:
         elif x0-self.width+(signe*self.__dx)<0:
             signe=1
             DownMovement=1
-        return signe,DownMovement
+        if y0+int(self.height)/2>=int(self.__canvas.cget('height'))-250:
+            alienInvasion=True
+        return signe,DownMovement,alienInvasion
     
 
     

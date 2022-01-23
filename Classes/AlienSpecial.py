@@ -8,7 +8,7 @@ from random import randint
 #Classe contenant les informations et les methodes pour l'ennemi special
 class AlienSpecial:
     def __init__(self,canvas,wind,positionx,positiony):
-        self.bonusScore=10
+        self.bonusScore=150
         self.width = 50
         self.height = 50
         self.__positionx=positionx
@@ -23,7 +23,7 @@ class AlienSpecial:
     #Methode qui place l'ennemi special sur le canvas
     def place_special(self):
         scriptDir = os.path.dirname(__file__)
-        imgpath = os.path.join(scriptDir, '../Assets/space_invaders_alien.png')
+        imgpath = os.path.join(scriptDir, '../Assets/space_invaders_special.png')
         img= Image.open(imgpath)
         self.__canvas_img = ImageTk.PhotoImage(img)
         self.rect=self.__canvas.create_image(self.__positionx+self.width,self.__positiony+self.height, image=self.__canvas_img) 

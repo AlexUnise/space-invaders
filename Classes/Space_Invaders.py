@@ -56,7 +56,12 @@ class Space_Invaders:
         
         #Joueur
         self.__player = Player(int(self.__width/2),self.__height-50,20,50,50,self.lives,self.__canvas,self.__wind)
-
+        #On met le score a 0
+        self.__player.score=0
+        self.score.set('Score: ' + str(self.__player.score))
+        #On met les vies du joueur a 3
+        self.__player.lives=3
+        self.lives.set('Lives: ' + str(self.__player.lives) )
         #Protection
         self.__protection=Protection(self.__canvas,self.__wind)
 
@@ -153,12 +158,12 @@ class Space_Invaders:
     def keyboard(self,event):
         (x0,y0)=self.__canvas.coords(self.__player.rect)
         key=event.keysym
-        if key=='d' and x0+self.__player.width+self.__player.dx<self.__width:
+        if key=='d' and x0+int(self.__player.width/2)+self.__player.dx<self.__width:
             self.__player.moveRight(self.__canvas)
 
-        if key=='q' and x0-self.__player.dx>0:
+        if key=='q' and x0-int(self.__player.width/2)-self.__player.dx>0:
             self.__player.moveLeft(self.__canvas)   
-        if key=='f' and self.__wait==0:
+        if key=='space' and self.__wait==0:
             self.__wait=1
             projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.canvas_img_rect,self.__blockAlien,"player",self.__player,self.__specialAlien)
             projectilePlayer.place_projectile()
