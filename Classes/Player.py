@@ -10,7 +10,7 @@ class Player:
     
     def __init__(self,x,y,dx,width,height,life_counter,canvas,wind):
         self.__name=""
-        self.__lives = 3
+        self.lives = 3
         self.score = 0
         self.__positionx = x
         self.__positiony = y
@@ -38,10 +38,21 @@ class Player:
 
 
     def player_hit(self):
-        self.__lives-=1
-        self.__life_counter.set('Lives: ' + str(self.__lives) )
+        self.lives-=1
+        self.__life_counter.set('Lives: ' + str(self.lives) )
 
-        if self.__lives==0:
-            self.__canvas.delete(self.rect)
+        if self.lives==0:
+            #On efface tout dans le canvas
             self.__canvas.delete('all')
+            #Affichage du titre gameover 
             self.__canvas.create_text(int(int(self.__canvas.cget('width'))/2),int(int(self.__canvas.cget('height'))/2), text='Vous avez perdu !', fill="#fff", font=('Helvetica','30','bold'))
+            #On désactive l'écoute des évenements clavier 
+            self.__canvas.unbind('<Key>', self.__keyboard_event_id)
+            # #On désactive l'exécution de la fonction alien_fire 
+            # self.__canvas.after_cancel(self.__alienFireAfter)
+    
+    def set_keyboard_id(self,id):
+        self.__keyboard_event_id = id
+
+    # def set_alienFireAfter(self, id):
+    #     self.__alienFireAfter = id

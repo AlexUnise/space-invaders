@@ -82,12 +82,16 @@ class Space_Invaders:
         
 
         self.__canvas.focus_set()
-        self.__canvas.bind('<Key>',self.keyboard)
+        self.__keyboard_event_id = self.__canvas.bind('<Key>',self.keyboard)
+
+        self.__player.set_keyboard_id(self.__keyboard_event_id)
 
         self.projectile_wait()
 
+
         self.alien_fire()
 
+        #self.__player.set_alienFireAfter(self.__alienFireAfter)
 
         self.__restart=False
 
@@ -165,7 +169,7 @@ class Space_Invaders:
         projectileAlien=Projectile(self.__canvas,self.__wind,self.__blockAlien.aliens[row][column],self.canvas_img_rect,self.__blockAlien,"alien",self.__player)
         projectileAlien.place_projectile()
         projectileAlien.fire_projectile()
-        alienFireAfter=self.__wind.after(time,self.alien_fire)
+        self.__alienFireAfter=self.__wind.after(time,self.alien_fire)
         #if self.__restart==True:
             #self.__wind.after_cancel(alienFireAfter)
 
