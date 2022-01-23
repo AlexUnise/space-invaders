@@ -1,4 +1,4 @@
-Projet: Space Invaders
+Projet: Space Invaders  
 Auteurs: MICHALOPOULOS Zaphirios et OUENADIO Alexandre
 
 
