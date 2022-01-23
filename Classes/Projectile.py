@@ -13,6 +13,7 @@ class Projectile:
         self.__origin=shooter
 
     def place_projectile(self):
+        print(self.__entity.rect)
         (x0,y0,x1,y1)=self.__canvas.coords(self.__entity.rect)
         self.projectile=self.__canvas.create_rectangle(x0+int(self.__entity.width/2),y0-5,x0+int(self.__entity.width/2)+self.__width,y0-5-self.__height,fill="yellow")
         

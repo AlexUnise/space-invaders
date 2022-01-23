@@ -31,34 +31,56 @@ class Space_Invaders:
 
         img= Image.open(imgpath)
         resized_image= img.resize((self.__width,self.__height), Image.ANTIALIAS)
-        backgroundImage= ImageTk.PhotoImage(resized_image)
-        self.__backImg=self.__canvas.create_image(0,0, image=backgroundImage, anchor = "nw")
+        self.__canvas_img = ImageTk.PhotoImage(resized_image)
+        self.canvas_img_rect=self.__canvas.create_image(0,0, image=self.__canvas_img, anchor = "nw")
+
         self.__canvas.grid(column=0, row=1, sticky="w")
+
+
         
+        #Joueur
+        self.__player = Player(int(self.__width/2),self.__height-50,20,50,50,self.__canvas,self.__wind)
+
         #Protection
         self.__protection=Protection(self.__canvas,self.__wind)
 
         #Aliens
         self.__blockAlien=Aliens_block(self.__canvas,self.__wind)
-        
-        #Joueur
-        self.__player=Player(int(self.__width/2),self.__height-50,20,50,50,self.__canvas,self.__wind)
-        
+
+
         #Projectile
         self.__fireRate=300
         self.__wait=0
+
+
+        #Lancer le jeu
+        self.start_window()
+        
+       
+
+    def  start_game(self):
+        self.__canvas.delete('all')
+        self.canvas_img_rect =self.__canvas.create_image(0,0, image=self.__canvas_img, anchor = "nw")
+        
+        
+        
+
+        
+       
 
         #Lancer le jeu
         self.start()
     
         
+
+
+    def start_window(self):
         
-    def start(self):
         wind=self.__wind
         scoreLabel = Label(wind, text="Score: 0")
         livesLabel = Label(wind, text="Lives: 3")
         quitButton = Button(wind, text="Quit game", command=wind.destroy)
-        newGameButton = Button(wind, text="New game")
+        newGameButton = Button(wind, text="New game", command=self.start_game)
 
 
         wind.columnconfigure(0, weight=1)
@@ -91,6 +113,7 @@ class Space_Invaders:
         self.__wind.after(self.__fireRate,self.projectile_wait)
 
         
+    
 
     def keyboard(self,event):
         (x0,y0,x1,y1)=self.__canvas.coords(self.__player.rect)
@@ -102,7 +125,7 @@ class Space_Invaders:
             self.__player.moveLeft(self.__canvas)   
         if key=='f' and self.__wait==0:
             self.__wait=1
-            projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.__backImg,self.__blockAlien,"player",self.__player)
+            projectilePlayer=Projectile(self.__canvas,self.__wind,self.__player,self.canvas_img_rect,self.__blockAlien,"player",self.__player)
             projectilePlayer.place_projectile()
             projectilePlayer.fire_projectile()
             
@@ -110,7 +133,7 @@ class Space_Invaders:
         time=randint(800,1250)
         row=randint(0,len(self.__blockAlien.aliens)-1)
         column=randint(0,len(self.__blockAlien.aliens[row])-1)
-        projectileAlien=Projectile(self.__canvas,self.__wind,self.__blockAlien.aliens[row][column],self.__backImg,self.__blockAlien,"alien",self.__player)
+        projectileAlien=Projectile(self.__canvas,self.__wind,self.__blockAlien.aliens[row][column],self.canvas_img_rect,self.__blockAlien,"alien",self.__player)
         projectileAlien.place_projectile()
         projectileAlien.fire_projectile()
         self.__wind.after(time,self.alien_fire)
