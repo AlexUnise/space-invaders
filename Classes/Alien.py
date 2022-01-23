@@ -25,13 +25,12 @@ class Alien:
         self.rect=self.__canvas.create_image(self.__positionx+self.width,self.__positiony+self.height, image=self.__canvas_img)  
 
     
-
+    #Methode qui permet au alien de se deplacer verticalement ou horizontalement sur le canvas, en fonction de la des entrees
+    #ou le signe est la direction horizontale de l'alien, et le DownMovement est le deplacement ou pas vers le bas.
     def move_alien(self,signe,DownMovement):
-        
-        (x0,y0)=self.__canvas.coords(self.rect)
         self.__canvas.move(self.rect,signe*self.__dx,DownMovement*self.__dy )
             
-
+    #Methode qui verifie si l'alien touche les bord du canvas.
     def border_overlapping(self,signe,DownMovement):
 
         (x0,y0)=self.__canvas.coords(self.rect)

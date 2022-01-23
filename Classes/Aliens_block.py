@@ -3,7 +3,7 @@ from Classes.Alien import Alien
 def objectToID(object):
     return object.alien
 
-
+#Classe qui gere la creation de multiples alien en bloc
 class Aliens_block:
     def __init__(self,canvas,wind,player,score_counter):
         self.__canvas=canvas
@@ -19,6 +19,8 @@ class Aliens_block:
         self.__player = player
         self.__score_counter = score_counter
 
+
+    #Methode qui permet de creer et de placer multiples alien en formation rectangulaire sur le canvas
     def create_bloc(self):
         placementy=self.__positiony
         for rows in range(0,self.__height):
@@ -32,6 +34,11 @@ class Aliens_block:
             self.aliens.append(ligne_alien)
             placementy+=alien.height+10
 
+
+
+    #Methode qui va deplacer la formation d'alien dans le sens oppose de leur mouvement, 
+    #le moment ou les aliens aux extremites touchent les bord du canvas, tout en verifiant
+    # si un alien a ete touche par le joueur. 
     def move_bloc(self):
         
         self.__DownMovement=0
@@ -53,7 +60,14 @@ class Aliens_block:
         
         
         self.__wind.after(60,self.move_bloc)
-    
+
+
+    #Methode qui recoit l'alien touche par un projectile du joueur et qui le sauvegarde dans une liste    
+    def add_aliens_hit(self,id):
+        self.__aliensHit.append(id)
+
+
+    #Methode qui detruit les aliens qui ont ete touches par le joueur
     def destroy_alien(self):
         for ligne in self.aliens:
             for alien in ligne:
@@ -69,6 +83,3 @@ class Aliens_block:
         
 
         
-    
-    def add_aliens_hit(self,id):
-        self.__aliensHit.append(id)
