@@ -43,3 +43,5 @@ class Player:
 
         if self.__lives==0:
             self.__canvas.delete(self.rect)
+            self.__canvas.delete('all')
+            self.__canvas.create_text(int(int(self.__canvas.cget('width'))/2),int(int(self.__canvas.cget('height'))/2), text='Vous avez perdu !', fill="#fff", font=('Helvetica','30','bold'))
