@@ -19,7 +19,6 @@ class Player:
         self.height = height
         self.__canvas=canvas
         self.__wind=wind
-        self.__file=[]
         self.__life_counter = life_counter
         
     #Methode qui place le joueur sur le canvas    

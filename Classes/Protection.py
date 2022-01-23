@@ -5,7 +5,7 @@ class Protection:
         self.__canvas=canvas
         self.__wind=wind
         self.__width=9
-        self.__height=4
+        self.__height=3
         self.__numberOfProtections=3
         self.__protectionDistancex=150
         self.__protectionDistancey=250

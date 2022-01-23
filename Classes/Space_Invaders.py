@@ -8,6 +8,7 @@ from Classes.Aliens_block import Aliens_block
 from Classes.Player import Player
 from Classes.Projectile import Projectile
 from Classes.Protection import Protection
+from Classes.File import File
 
 from random import randint
 
@@ -25,7 +26,7 @@ class Space_Invaders:
         self.__wind.title('Space Invaders')
        
         #Check for new game
-        self.__afterFunctions=[]
+        self.__afterFunctions=File()
         
 
         #Lancer le jeu
@@ -35,8 +36,9 @@ class Space_Invaders:
     #Fonction permettant de lancer, ainsi que de relancer la partie
     def  start_game(self):
         #Nouvelle partie
-        if self.__afterFunctions!=[]:
-            for afterFunction in self.__afterFunctions:
+        if self.__afterFunctions.premier()!=None:
+            while self.__afterFunctions.premier()!=None:
+                afterFunction,liste=self.__afterFunctions.retirer()
                 self.__wind.after_cancel(afterFunction)
 
         self.__canvas=Canvas(self.__wind,bg="black", width=self.__width, height=self.__height)
@@ -51,8 +53,6 @@ class Space_Invaders:
 
         self.__canvas.grid(column=0, row=1, sticky="w")
 
-        
-        
         #Joueur
         self.__player = Player(int(self.__width/2),self.__height-50,20,50,50,self.lives,self.__canvas,self.__wind)
         #On met le score a 0
@@ -86,7 +86,6 @@ class Space_Invaders:
         #On place le joueur
         self.__player.place_player()
 
-        
         #On detecte les touches appuyees
         self.__canvas.focus_set()
         self.__keyboard_event_id = self.__canvas.bind('<Key>',self.keyboard)
@@ -96,16 +95,6 @@ class Space_Invaders:
 
         #Les aliens commencent a tirer aleatoirement
         self.alien_fire()
-
-
-
-
-        
-
-
-
-        
-       
 
 
     #Methode qui cree et organise la fenetre 
@@ -134,20 +123,17 @@ class Space_Invaders:
         newGameButton.grid(column=1, row=0, sticky="s")
         quitButton.grid(column=1, row=1, sticky='n')
         
-        
         wind.mainloop()
        
     
-        
      #Methode qui impose une pause entre chaque tir du joueur   
     def projectile_wait(self):
         if self.__wait!=0:
             self.__wait=0
         projectileWaitAfter=self.__wind.after(self.__fireRate,self.projectile_wait)
-        self.__afterFunctions.append(projectileWaitAfter)
+        self.__afterFunctions.ajouter(projectileWaitAfter)
 
         
-    
     #Methode qui recoit en entree les touches appuyees par l'utilisateur et qui effectue l'action correspondante a cette touche
     def keyboard(self,event):
         (x0,y0)=self.__canvas.coords(self.__player.rect)
@@ -173,7 +159,7 @@ class Space_Invaders:
         projectileAlien.place_projectile()
         projectileAlien.fire_projectile()
         alienFireAfter=self.__wind.after(time,self.alien_fire)
-        self.__afterFunctions.append(alienFireAfter)
+        self.__afterFunctions.ajouter(alienFireAfter)
 
     #Methode qui fait apparaitre l'ennemi special
     def special_spawn(self):
@@ -184,4 +170,4 @@ class Space_Invaders:
         elif self.__specialAlien.rect not in self.__canvas.find_all():
             self.__spawn=True
         specialSpawnAfter=self.__wind.after(self.__specialSpawnTime,self.special_spawn)
-        self.__afterFunctions.append(specialSpawnAfter)
+        self.__afterFunctions.ajouter(specialSpawnAfter)
