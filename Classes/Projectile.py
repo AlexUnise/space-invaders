@@ -13,7 +13,6 @@ class Projectile:
         self.__origin=shooter
 
     def place_projectile(self):
-        print(self.__entity.rect)
         (x0,y0,x1,y1)=self.__canvas.coords(self.__entity.rect)
         self.projectile=self.__canvas.create_rectangle(x0+int(self.__entity.width/2),y0-5,x0+int(self.__entity.width/2)+self.__width,y0-5-self.__height,fill="yellow")
         
@@ -22,7 +21,7 @@ class Projectile:
         (x_proj0,y_proj0,x_proj1,y_proj1)=self.__canvas.coords(self.projectile)
         liste_objet=self.__canvas.find_overlapping(x_proj0,y_proj0,x_proj1,y_proj1)
         
-        if len(liste_objet)>=2:
+        if len(liste_objet)>2:
             
             for objet in liste_objet:
                 if objet!=self.__backImg and objet!=self.projectile and self.__origin=="player":
@@ -38,12 +37,15 @@ class Projectile:
                         if y_proj1>int(self.__canvas.cget('height'))-250:
                             self.__canvas.delete(self.projectile)  
                             self.__canvas.delete(objet)
+     
 
 
-        if y_proj0-self.__dy<0 or y_proj1+self.__dy>int(self.__canvas.cget('height')):
+        if y_proj0<0 or y_proj1>int(self.__canvas.cget('height')):
             self.__canvas.delete(self.projectile)
 
-        else:
+
+
+        if self.projectile in self.__canvas.find_all():
             if self.__origin=="player":
                 self.__canvas.move(self.projectile,0,-self.__dy)
             elif self.__origin=="alien":

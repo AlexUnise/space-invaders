@@ -15,7 +15,6 @@ class Protection:
 
     def place_protection(self):
         placementProtection=0
-        print(self.__positionx)
         for columns in range(0,self.__numberOfProtections):
 
             blocProtection=[]
