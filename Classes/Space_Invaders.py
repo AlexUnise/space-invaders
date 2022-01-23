@@ -56,7 +56,7 @@ class Space_Invaders:
         self.__blockAlien=Aliens_block(self.__canvas,self.__wind)
 
         #Projectile
-        self.__fireRate=300
+        self.__fireRate=600
         self.__wait=0
 
         self.__protection.place_protection()
@@ -113,9 +113,9 @@ class Space_Invaders:
     
 
     def keyboard(self,event):
-        (x0,y0,x1,y1)=self.__canvas.coords(self.__player.rect)
+        (x0,y0)=self.__canvas.coords(self.__player.rect)
         key=event.keysym
-        if key=='d' and x1+self.__player.dx<self.__width:
+        if key=='d' and x0+self.__player.width+self.__player.dx<self.__width:
             self.__player.moveRight(self.__canvas)
 
         if key=='q' and x0-self.__player.dx>0:

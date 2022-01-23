@@ -1,3 +1,6 @@
+from PIL import Image,ImageTk
+import os
+
 class Player:
     #Classe Joueur
     #Un joueur peut se déplacer uniquement sur l'axe x. Le programmeur définit sa coordonnée y. 
@@ -20,7 +23,12 @@ class Player:
         
         
     def place_player(self):
-        self.rect=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="green")
+        scriptDir = os.path.dirname(__file__)
+        imgpath = os.path.join(scriptDir, '../Assets/space_invaders_player.png')
+        img= Image.open(imgpath)
+        self.__canvas_img = ImageTk.PhotoImage(img)
+        self.rect=self.__canvas.create_image(self.__positionx,self.__positiony, image=self.__canvas_img)  
+        #self.rect=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="green")
     
     def moveLeft(self,canvas):
         canvas.move(self.rect,-self.dx, 0)
@@ -30,6 +38,5 @@ class Player:
 
     def player_hit(self):
         self.__lives-=1
-        self.__canvas.itemconfig(self.rect, fill='yellow')
         if self.__lives==0:
             self.__canvas.delete(self.rect)

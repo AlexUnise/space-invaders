@@ -1,3 +1,6 @@
+from PIL import Image,ImageTk
+import os
+
 #classe Alien pour attribuer le nombre de vie, la cadence de tir et le comportment de l'alien       
 class Alien:
     #Classe Alien
@@ -5,29 +8,37 @@ class Alien:
     #On definit sa taille ainsi que sa hitbox
     #dx et dy réprésentent sa vitesse sur chaque axe
     def __init__(self,canvas,wind,positionx,positiony):
-        self.__lives=1
-        self.__hitbox=25
-        self.width = 25
-        self.height = 25
+        self.width = 50
+        self.height = 50
         self.__positionx=positionx
         self.__positiony=positiony
         self.__dx = 5
         self.__dy = 30
         self.__canvas=canvas
         self.__wind=wind
-        self.rect=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="red",)
+
+
+
+        scriptDir = os.path.dirname(__file__)
+        imgpath = os.path.join(scriptDir, '../Assets/space_invaders_alien.png')
+        img= Image.open(imgpath)
+        self.__canvas_img = ImageTk.PhotoImage(img)
+        self.rect=self.__canvas.create_image(self.__positionx,self.__positiony, image=self.__canvas_img)  
+        #self.rect=self.__canvas.create_rectangle (self.__positionx,self.__positiony,self.__positionx+self.width,self.__positiony+self.height,fill="red",)
     
 
     def move_alien(self,signe,DownMovement):
         
-        (x0,y0,x1,y1)=self.__canvas.coords(self.rect)
+        #(x0,y0,x1,y1)=self.__canvas.coords(self.rect)
+        (x0,y0)=self.__canvas.coords(self.rect)
         self.__canvas.move(self.rect,signe*self.__dx,DownMovement*self.__dy )
             
 
     def border_overlapping(self,signe,DownMovement):
 
-        (x0,y0,x1,y1)=self.__canvas.coords(self.rect)
-        if x1+(signe*self.__dx)>int(self.__canvas.cget('width')):
+        #(x0,y0,x1,y1)=self.__canvas.coords(self.rect)
+        (x0,y0)=self.__canvas.coords(self.rect)
+        if x0+self.width+(signe*self.__dx)>int(self.__canvas.cget('width')):
             signe=-1
             DownMovement=1
         elif x0+(signe*self.__dx)<0:
