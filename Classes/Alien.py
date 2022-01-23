@@ -25,6 +25,7 @@ class Alien:
             
 
     def border_overlapping(self,signe,DownMovement):
+
         (x0,y0,x1,y1)=self.__canvas.coords(self.rect)
         if x1+(signe*self.__dx)>int(self.__canvas.cget('width')):
             signe=-1

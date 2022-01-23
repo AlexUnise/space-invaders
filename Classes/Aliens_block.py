@@ -1,5 +1,9 @@
 from Classes.Alien import Alien
 
+def objectToID(object):
+    return object.alien
+
+
 class Aliens_block:
     def __init__(self,canvas,wind):
         self.__canvas=canvas

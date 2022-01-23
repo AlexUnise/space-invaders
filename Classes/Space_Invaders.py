@@ -24,7 +24,15 @@ class Space_Invaders:
         self.__wind.title('Space Invaders')
        
         #Canvas
-        self.__canvas=Canvas(self.__wind,bg="white", width=self.__width, height=self.__height)
+        
+
+        #Lancer le jeu
+        self.start_window()
+        
+
+    def  start_game(self):
+
+        self.__canvas=Canvas(self.__wind,bg="black", width=self.__width, height=self.__height)
 
         scriptDir = os.path.dirname(__file__)
         imgpath = os.path.join(scriptDir, '../Assets/background.jpg')
@@ -47,41 +55,38 @@ class Space_Invaders:
         #Aliens
         self.__blockAlien=Aliens_block(self.__canvas,self.__wind)
 
-
         #Projectile
         self.__fireRate=300
         self.__wait=0
 
+        self.__protection.place_protection()
+        self.__blockAlien.create_bloc()
+        self.__player.place_player()
+        self.__blockAlien.move_bloc()
+        self.__canvas.focus_set()
+        self.__canvas.bind('<Key>',self.keyboard)
+        self.projectile_wait()
+        self.alien_fire()
 
-        #Lancer le jeu
-        self.start_window()
+
+
+        
+
+
+
         
        
 
-    def  start_game(self):
-        self.__canvas.delete('all')
-        self.canvas_img_rect =self.__canvas.create_image(0,0, image=self.__canvas_img, anchor = "nw")
-        
-        
-        
-
-        
-       
-
-        #Lancer le jeu
-        self.start()
-    
-        
 
 
     def start_window(self):
-        
+        number_game = 0
         wind=self.__wind
         scoreLabel = Label(wind, text="Score: 0")
         livesLabel = Label(wind, text="Lives: 3")
         quitButton = Button(wind, text="Quit game", command=wind.destroy)
         newGameButton = Button(wind, text="New game", command=self.start_game)
-
+        
 
         wind.columnconfigure(0, weight=1)
         wind.columnconfigure(1, weight=1)
@@ -93,15 +98,7 @@ class Space_Invaders:
         newGameButton.grid(column=1, row=0, sticky="s")
         quitButton.grid(column=1, row=1, sticky='n')
         
-        self.__protection.place_protection()
-        self.__blockAlien.create_bloc()
-        self.__player.place_player()
-        self.__blockAlien.move_bloc()
-        self.__canvas.focus_set()
-        self.__canvas.bind('<Key>',self.keyboard)
-        self.projectile_wait()
-        self.alien_fire()
-
+        
         wind.mainloop()
        
     
