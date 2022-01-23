@@ -8,7 +8,7 @@ class Player:
     #La fonction draw déssine pour la première fois le player sur le canvas
     #Les fonctions moveRight et moveLeft permettent de déplacer le joueur sur le canvas.
     
-    def __init__(self,x,y,dx,width,height,canvas,wind):
+    def __init__(self,x,y,dx,width,height,life_counter,canvas,wind):
         self.__name=""
         self.__lives = 3
         self.score = 0
@@ -20,6 +20,7 @@ class Player:
         self.__canvas=canvas
         self.__wind=wind
         self.__file=[]
+        self.__life_counter = life_counter
         
         
     def place_player(self):
@@ -38,5 +39,7 @@ class Player:
 
     def player_hit(self):
         self.__lives-=1
+        self.__life_counter.set('Lives: ' + str(self.__lives) )
+
         if self.__lives==0:
             self.__canvas.delete(self.rect)

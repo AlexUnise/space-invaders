@@ -51,7 +51,7 @@ class Space_Invaders:
         
         
         #Joueur
-        self.__player = Player(int(self.__width/2),self.__height-50,20,50,50,self.__canvas,self.__wind)
+        self.__player = Player(int(self.__width/2),self.__height-50,20,50,50,self.lives,self.__canvas,self.__wind)
 
         #Protection
         self.__protection=Protection(self.__canvas,self.__wind)
@@ -104,12 +104,15 @@ class Space_Invaders:
     def start_window(self):
         wind=self.__wind
     
+        #Chaine de caratère qui évolue en fonction du nombre d'aliens tués
         self.score = StringVar()
         self.score.set('Score: 0')
-
+        #Chaine de caratère qui évolue en fonction du nombre de fois que le joueur est touché
+        self.lives = StringVar()
+        self.lives.set('Lives: 3')
 
         scoreLabel = Label(wind, textvariable=self.score)
-        livesLabel = Label(wind, text="Lives: 3")
+        livesLabel = Label(wind, textvariable=self.lives)
         quitButton = Button(wind, text="Quit game", command=wind.destroy)
         newGameButton = Button(wind, text="New game", command=self.start_game)
         
